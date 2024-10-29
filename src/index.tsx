@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';
+import App from "./app/app";
 
 
 const root = ReactDOM.createRoot(
@@ -8,7 +9,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <StrictMode >
-    <h1>Main</h1>
-    <h2>SemiMain</h2>
+    <App />
   </StrictMode >
 );
