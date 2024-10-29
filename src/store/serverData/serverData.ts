@@ -1,5 +1,5 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {NameSpace} from "../../utils/nameSpace";
+import {createSlice} from '@reduxjs/toolkit';
+import {NameSpace} from '../../utils/nameSpace';
 
 type serverDataType = {
   auth: string;
