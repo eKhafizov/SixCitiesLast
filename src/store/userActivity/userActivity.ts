@@ -26,7 +26,7 @@ const userActivity = createSlice({
     getCity: (state, action: {payload: string}) => {
       state.city = action.payload;
     },
-    getUserInfo: (state, action: {payload: string}) => {
+    getUserInfo: (state, action: {payload: string | undefined}) => {
       state.userInfo = action.payload;
     },
     getChosenOffer: (state, action: {payload: number}) => {

@@ -32,7 +32,7 @@ function App(): JSX.Element {
         <Route index element={<MainPage />}/>
         <Route path=':filter/:city' element={<MainPage />} />
         <Route path={AppRoutes.Offers} >
-          <Route path=':id' element={<OfferPage />}/>
+          <Route path=':id' element={<OfferPage />} />
           <Route path='*' element={<ErrorPage />} />
         </Route>
         <Route path={AppRoutes.Favorites} element={<PrivateRoute auth={auth}><FavoritesPage /></PrivateRoute> }/>

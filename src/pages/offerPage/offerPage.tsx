@@ -10,8 +10,14 @@ import PropertyGallery from '../../components/propertyGallery/propertyGallery';
 import PropertyName from '../../components/propertyName/propertyName';
 import PropertRating from '../../components/propertyRating/propertRating';
 import PropertyPrice from '../../components/propertyPrice/propertyPrice';
+import {useParams} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
 
 function OfferPage() {
+  const param = useParams();
+  const offers = [{id: 1}];
+  const offer = offers.find((item) => item.id === Number(param.id));
+
   return (
     <main className="page__main page__main--property">
       <section className="property">
