@@ -1,6 +1,9 @@
 import React from 'react';
-
-function Sorting() {
+import {OffersArray} from '../../types/types';
+type PlacesListProps = {
+  filterOffersInCity: OffersArray | undefined;
+}
+function Sorting({ filterOffersInCity }: PlacesListProps) {
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>

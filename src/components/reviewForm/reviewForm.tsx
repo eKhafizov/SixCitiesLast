@@ -1,6 +1,7 @@
 import React from 'react';
+import {OfferPropType} from '../propertyGallery/propertyGallery';
 
-function ReviewForm() {
+function ReviewForm({offer} : OfferPropType) {
   return (
     <form className="reviews__htmlForm htmlForm" action="#" method="post">
       <label className="reviews__label htmlForm__label" htmlFor="review">Your review</label>

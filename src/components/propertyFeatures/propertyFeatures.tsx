@@ -1,16 +1,17 @@
 import React from 'react';
+import {OfferPropType} from '../propertyGallery/propertyGallery';
 
-function PropertyFeatures() {
+function PropertyFeatures({offer}:OfferPropType) {
   return (
     <ul className="property__features">
       <li className="property__feature property__feature--entire">
-        Apartment
+        type: {offer.type}
       </li>
       <li className="property__feature property__feature--bedrooms">
-        3 Bedrooms
+        {offer.bedrooms} bedrooms
       </li>
       <li className="property__feature property__feature--adults">
-        Max 4 adults
+        Max {offer.maxAdults} adults
       </li>
     </ul>
   );

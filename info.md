@@ -1,3 +1,10 @@
+//filter cities + choosing city
+//filter sorting + sorting
+//bookmarks
+//favorites
+//map large
+//map small
+
 
 https://13.react.htmlacademy.pro/six-cities/comments/10 - комменты к месту
 https://13.react.htmlacademy.pro/six-cities/offers/10/nearby - места вокруг конкретного оффера

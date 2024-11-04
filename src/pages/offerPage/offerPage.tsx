@@ -11,39 +11,40 @@ import PropertyName from '../../components/propertyName/propertyName';
 import PropertRating from '../../components/propertyRating/propertRating';
 import PropertyPrice from '../../components/propertyPrice/propertyPrice';
 import {useParams} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import {useGetCommentsQuery, useGetOffersQuery} from '../../features/sixCitiesApi';
 
 function OfferPage() {
   const param = useParams();
-  const offers = [{id: 1}];
-  const offer = offers.find((item) => item.id === Number(param.id));
+  const {data: offers} = useGetOffersQuery();
+  const offer = offers?.find((item) => item.id === Number(param.id));
+  const {data: reviews} = useGetCommentsQuery(Number(param.id));
 
-  return (
+  return offer ? (
     <main className="page__main page__main--property">
       <section className="property">
-        <PropertyGallery />
+        <PropertyGallery offer={offer} />
         <div className="property__container container">
           <div className="property__wrapper">
-            <div className="property__mark">
-              <span>Premium</span>
-            </div>
-            <PropertyName />
-            <PropertRating />
-            <PropertyFeatures />
-            <PropertyPrice />
-            <PropertyInside />
-            <PropertyHost />
+            {offer.isPremium && (<div className="property__mark"><span>Premium</span></div>)}
+            <PropertyName offer={offer} />
+            <PropertRating offer={offer} />
+            <PropertyFeatures offer={offer} />
+            <PropertyPrice offer={offer} />
+            <PropertyInside offer={offer} />
+            <PropertyHost offer={offer} />
             <section className="property__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-              <Reviews />
-              <ReviewForm />
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews?.length}</span></h2>
+              <Reviews reviews={reviews} />
+              <ReviewForm offer={offer} />
             </section>
           </div>
         </div>
-        <MapOrder />
+        <MapOrder offer={offer} />
       </section>
-      <NearPlaces />
+      <NearPlaces offer={offer} />
     </main>
+  ) : (
+    <h1>No such property</h1>
   );
 }
 
