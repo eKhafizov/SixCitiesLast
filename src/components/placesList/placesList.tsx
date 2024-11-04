@@ -2,16 +2,41 @@ import React from 'react';
 import {OffersArray} from '../../types/types';
 import {Link} from 'react-router-dom';
 import {AppRoutes} from '../../routes/AppRoutes';
+import {useAppSelector} from '../../store/hooks';
+import {filtersSorting} from '../../utils/utils';
 
 type PlacesListProps = {
   filterOffersInCity: OffersArray | undefined;
 }
-
 function PlacesList({filterOffersInCity} : PlacesListProps) {
+  const currentFilter = useAppSelector((state) => state.USER_ACTIVITY.filter);
+  // ['Popular', 'Price: high to low', 'Price: low to high', 'Top rated first']
+  const filteredOffers = () => {
+    if (filterOffersInCity !== undefined) {
+      switch (currentFilter) {
+        case filtersSorting[0]:
+          return [...filterOffersInCity];
+          break;
+        case filtersSorting[1]:
+          return [...filterOffersInCity].sort((a, b) => a.price - b.price);
+          break;
+        case filtersSorting[2]:
+          return [...filterOffersInCity].sort((a, b) => b.price - a.price);
+          break;
+        case filtersSorting[3]:
+          return [...filterOffersInCity].sort((a, b) => a.rating - b.rating);
+          break;
+        default:
+          return [...filterOffersInCity];
+      }
+    }
+    return [];
+  };
+
   return (
     <div className='cities__places-list places__list tabs__content'>
       {
-        filterOffersInCity?.map((item) => (
+        filteredOffers().map((item) => (
           <article key={item.id} className='cities__card place-card'>
             {item.isPremium && (<div className='place-card__mark'><span>Premium</span></div>)}
             <div className='cities__image-wrapper place-card__image-wrapper'>

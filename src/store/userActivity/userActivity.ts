@@ -1,20 +1,18 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../utils/nameSpace';
-import {OfferType} from '../../types/types';
-import serverData from '../serverData/serverData';
 
 type userActivityType = {
   filter: string;
   city: string;
   userInfo: string | undefined;
   chosenOffer: number | undefined;
-}
+};
 const initialState: userActivityType = {
-  filter: 'Allgenres',
+  filter: 'Popular',
   city: 'Paris',
   userInfo: undefined,
   chosenOffer: undefined,
-}
+};
 
 const userActivity = createSlice({
   name: NameSpace.userActivity,
@@ -33,7 +31,7 @@ const userActivity = createSlice({
       state.chosenOffer = action.payload;
     },
   }
-})
+});
 export default userActivity;
 export const {
   getFilter,

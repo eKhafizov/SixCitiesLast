@@ -6,9 +6,10 @@ export const citiesList = [
   'Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'
 ];
 
-export const filterList = [
+export const filterList : string[] = [
   'popular', 'priceHighToLow', 'priceLowToHigh', 'topRatedFirst'
 ];
+export const filtersSorting = ['Popular', 'Price: high to low', 'Price: low to high', 'Top rated first'];
 
 export const citiesLocation = [
   {
