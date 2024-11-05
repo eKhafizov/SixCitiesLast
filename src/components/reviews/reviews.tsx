@@ -1,12 +1,10 @@
 import React from 'react';
-import {CommentServerType} from '../../types/types';
+import {useGetCommentsQuery} from '../../features/sixCitiesApi';
+import {OfferPropType} from '../propertyGallery/propertyGallery';
 
+function Reviews({offer}: OfferPropType) {
+  const {data: reviews} = useGetCommentsQuery(Number(offer.id));
 
-type ReviewProps = {
- reviews: CommentServerType[] | undefined;
-}
-
-function Reviews({reviews}: ReviewProps) {
   return (
     <ul className="reviews__list">
       {
@@ -14,21 +12,19 @@ function Reviews({reviews}: ReviewProps) {
           <li key={item.id} className="reviews__item">
             <div className="reviews__user user">
               <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar"/>
+                <img className="reviews__avatar user__avatar" src={item.user.avatarUrl.replace('https://13.react.pages.academy', 'https://13.react.htmlacademy.pro')} width="54" height="54" alt="Reviews avatar"/>
               </div>
-              <span className="reviews__user-name">Max</span>
+              <span className="reviews__user-name">{item.user.name}</span>
             </div>
             <div className="reviews__info">
               <div className="reviews__rating rating">
                 <div className="reviews__stars rating__stars">
                   <span style={{width: '80%'}}></span>
-                  <span className="visually-hidden">Rating</span>
+                  <span className="visually-hidden">Rating </span>
                 </div>
               </div>
               <p className="reviews__text">
-                A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The
-                building
-                is green and from 18th century.
+                {item.comment}
               </p>
               <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
             </div>

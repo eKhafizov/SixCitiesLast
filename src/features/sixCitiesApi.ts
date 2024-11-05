@@ -2,7 +2,6 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {NameSpace} from '../utils/nameSpace';
 import {getToken, removeToken, saveToken} from '../utils/token';
 import {CommentServerType, OffersArray} from '../types/types';
-import {ServerResponse} from 'node:http';
 import {getAuth} from '../store/serverData/serverData';
 import {getUserInfo} from '../store/userActivity/userActivity';
 
@@ -27,11 +26,15 @@ export const sixCitiesApi = createApi({
     }),
     getNearbyOffers: builder.query<OffersArray, number>({
       query: (id: number) => `/offers/${id}/nearby`,
-      providesTags: ['FAVORITES']
+      providesTags: ['NEARBY']
     }),
     getComments: builder.query<CommentServerType[], number>({
       query: (id: number) => `/comments/${id}`,
       providesTags: ['COMMENTS']
+    }),
+    getFavorites: builder.query<OffersArray, void>({
+      query: () => '/favorite',
+      providesTags: ['FAVORITES']
     }),
 
     //mutations
@@ -43,17 +46,19 @@ export const sixCitiesApi = createApi({
       }),
       invalidatesTags: ['COMMENTS']
     }),
-    fetchAddFavorite: builder.mutation<ServerResponse, number>({
+    fetchAddFavorite: builder.mutation<void, number>({
       query: (id: number) => ({
         url: `favorite/${id}/1`,
         method: 'POST',
+        body: id,
       }),
       invalidatesTags: ['FAVORITES']
     }),
-    fetchRemoveFavorite: builder.mutation<ServerResponse, number>({
+    fetchRemoveFavorite: builder.mutation<void, number>({
       query: (id: number) => ({
         url: `favorite/${id}/0`,
         method: 'POST',
+        body: id,
       }),
       invalidatesTags: ['FAVORITES']
     }),
@@ -91,6 +96,7 @@ export const {
   useGetOffersQuery,
   useGetNearbyOffersQuery,
   useGetCommentsQuery,
+  useGetFavoritesQuery,
   useFetchLogoutMutation,
   useFetchLoginMutation,
   useFetchAddCommentMutation,

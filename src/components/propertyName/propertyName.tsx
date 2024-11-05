@@ -1,5 +1,6 @@
 import React from 'react';
 import {OfferPropType} from '../propertyGallery/propertyGallery';
+import BookmarkOffer from '../bookmarkOffer/bookmarkOffer';
 
 
 function PropertyName({offer} : OfferPropType) {
@@ -8,12 +9,7 @@ function PropertyName({offer} : OfferPropType) {
       <h1 className="property__name">
         {offer.title}
       </h1>
-      <button className="property__bookmark-button button" type="button">
-        <svg className="property__bookmark-icon" width="31" height="33">
-          <use xlinkHref="#icon-bookmark"></use>
-        </svg>
-        <span className="visually-hidden">To bookmarks</span>
-      </button>
+      <BookmarkOffer offer={offer} />
     </div>
   );
 }

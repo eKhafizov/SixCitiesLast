@@ -17,7 +17,7 @@ function OfferPage() {
   const param = useParams();
   const {data: offers} = useGetOffersQuery();
   const offer = offers?.find((item) => item.id === Number(param.id));
-  const {data: reviews} = useGetCommentsQuery(Number(param.id));
+  const {data: reviews} = useGetCommentsQuery(Number(offer?.id));
 
   return offer ? (
     <main className="page__main page__main--property">
@@ -34,7 +34,7 @@ function OfferPage() {
             <PropertyHost offer={offer} />
             <section className="property__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews?.length}</span></h2>
-              <Reviews reviews={reviews} />
+              <Reviews offer={offer} />
               <ReviewForm offer={offer} />
             </section>
           </div>

@@ -1,53 +1,84 @@
-import React from 'react';
+import React, {ChangeEvent, FormEvent, useState} from 'react';
 import {OfferPropType} from '../propertyGallery/propertyGallery';
+import {useFetchAddCommentMutation} from '../../features/sixCitiesApi';
 
 function ReviewForm({offer} : OfferPropType) {
+  const [fetchAdd] = useFetchAddCommentMutation();
+
+  const [review, setReview] = useState({
+    id: offer.id,
+    rating: 1,
+    comment: ''
+  });
+  const submitter = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+  const count = [1, 2, 3, 4, 5];
+  const changeRating = (event: ChangeEvent<HTMLInputElement>) => {
+    const {value} = event.target;
+    setReview((prev) => ({...prev, rating: Number(value)}));
+  };
+  const changeText = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const {value} = event.target;
+    setReview((prev) => ({...prev, comment: value}));
+  };
+  const sendForm = () => {
+    fetchAdd(review);
+    setReview({
+      id: offer.id,
+      rating: 1,
+      comment: '',
+    });
+  };
+
   return (
-    <form className="reviews__htmlForm htmlForm" action="#" method="post">
+    <form className="reviews__htmlForm htmlForm" onSubmit={submitter} >
       <label className="reviews__label htmlForm__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-htmlForm htmlForm__rating">
-        <input className="htmlForm__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"/>
-        <label htmlFor="5-stars" className="reviews__rating-label htmlForm__rating-label" title="perfect">
-          <svg className="htmlForm__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="htmlForm__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio"/>
-        <label htmlFor="4-stars" className="reviews__rating-label htmlForm__rating-label" title="good">
-          <svg className="htmlForm__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="htmlForm__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio"/>
-        <label htmlFor="3-stars" className="reviews__rating-label htmlForm__rating-label" title="not bad">
-          <svg className="htmlForm__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="htmlForm__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio"/>
-        <label htmlFor="2-stars" className="reviews__rating-label htmlForm__rating-label" title="badly">
-          <svg className="htmlForm__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="htmlForm__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio"/>
-        <label htmlFor="1-star" className="reviews__rating-label htmlForm__rating-label" title="terribly">
-          <svg className="htmlForm__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+        {
+          count.map((item) => (
+            <span key={item}>
+              <input
+                className="htmlForm__rating-input visually-hidden"
+                name="rating"
+                value={item}
+                id={`${item}-stars`}
+                type="radio"
+                onChange={changeRating}
+              />
+              <label
+                htmlFor={`${item}-stars`}
+                className="reviews__rating-label htmlForm__rating-label"
+                title={`${item}-stars`}
+              >
+                <svg className="htmlForm__star-image" width="37" height="33">
+                  <use xlinkHref="#icon-star"></use>
+                </svg>
+              </label>
+            </span>
+          ))
+        }
       </div>
-      <textarea className="reviews__textarea htmlForm__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
+      <textarea
+        className="reviews__textarea htmlForm__textarea"
+        id="review"
+        name="review"
+        placeholder={review.comment}
+        value={review.comment}
+        onChange={changeText}
+      >
+      </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay
           with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit htmlForm__submit button" type="submit">Submit</button>
+        <button
+          className="reviews__submit htmlForm__submit button"
+          type="button"
+          onClick={sendForm}
+        >Submit
+        </button>
       </div>
     </form>
   );
